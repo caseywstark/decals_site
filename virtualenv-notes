@@ -13,10 +13,10 @@ unset PYTHONPATH
 module load python
 python --version
 
-cd /project/projectdirs/cosmo/dstn/unwise
+cd /project/projectdirs/cosmo/webapp/decals_proto
 
-virtualenv --system-site-packages venv-unwise-phot
-cd venv-unwise-phot
+virtualenv --system-site-packages venv_decals
+cd venv_decals
 
 source bin/activate
 
@@ -61,7 +61,7 @@ ln -s tractor-git/tractor tractor
 svn co svn+ssh://astrometry.net/svn/trunk/projects/unwise-web
 
 # Django patches:
-patch -p3 < unwise-web/django-1.6.2-on-python-2.6.1.patch
+(cd ... ; patch -p3) < unwise-web/django-1.6.2-on-python-2.6.1.patch
 (cd lib/python2.6/site-packages/; patch -p3) < unwise-web/django-1.6.2-on-python-2.6.1-b.patch
 
 python manage.py syncdb --database=usage
