@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block css %}
+#tiletab {
+font-size: 14px;
+background: #fff;
+margin: 15px;
+border-collapse: collapse;
+text-align: center;
+border-bottom: 2px solid #6678b1;
+}
+#tiletab th {
+padding: 15px 15px;
+border-bottom: 2px solid #6678b1;
+}
+#tiletab td {
+color: #669;
+padding: 6px 8px;
+}
+.odd {
+border-bottom: 1px solid #ccc;
+}
+#tiletab tbody tr:hover td {
+color: #009;
+}
+#optbox {
+text-align:left;
+width: 60%;
+}
+.light {
+text-align: center;
+font-size: 12;
+color: #888;
+}
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" language="javascript">// <![CDATA[
+function checkAll(parent, value) {
+var p = document.getElementById(parent);
+var kids = p.getElementsByTagName('input');
+for (var i=0; i<kids.length; i++) {
+  if (kids[i].type == 'checkbox') {
+    kids[i].checked = value;
+  }
+}
+}
+// ]]></script>
+{% endblock %}
+
+{% block content %}
+<center>
+<h2>unWISE Coadd Tiles</h2>
+<h3>{{ total_items }} tiles near RA,Dec = ({{ ra }}, {{ dec}}) radius {{ radius }} degrees</h3>
+
+<p>
+Either use the direct links to download a tarball of all the files for
+a tile,
+<br/>
+or select tiles using the checkboxes under <b>Get?</b> to select a set of tiles,
+<br/>
+and the checkboxes below to select the bands and products to download for each tile.
+</p>
+
+{% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="{{ myurl }}&page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="{{ myurl}}&page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+
+<form action="{% url 'tileset-tgz' %}" method="post">{% csrf_token %}
+<table id="tiletab">
+  <thead>
+    <tr>
+      <th>Get?<br>
+        <a onclick="javascript:checkAll('tiletab',true);" href="javascript:void(0);">all</a>
+        <a onclick="javascript:checkAll('tiletab',false);" href="javascript:void(0);">none</a>
+      </th><th>Coadd Tile</th><th>RA (deg)</th><th>Dec (deg)</th>
+      <th>W1 data</th>
+      <th>W2 data</th>
+      <th>W3 data</th>
+      <th>W4 data</th>
+      <th>W1-4 data</th>
+      <th>AllWISE</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for tile in object_list %}
+  <tr class="{% cycle 'even' 'odd' %}">
+    <td><input type="checkbox" name="tile{{ forloop.counter}}"
+               value="{{ tile.coadd }}"></td>
+    <td><a href="/data/{{tile.coadd|slice:":3"}}/{{tile.coadd}}/">{{ tile.coadd }}</a></td>
+    <td>{{ tile.ra|floatformat:3 }}</td>
+    <td>{{ tile.dec|floatformat:3 }}</td>
+    <td><a href="{% url 'tile-tgz' coadd=tile.coadd bands=1 %}">w1.tgz</a></td>
+    <td><a href="{% url 'tile-tgz' coadd=tile.coadd bands=2 %}">w2.tgz</a></td>
+    <td><a href="{% url 'tile-tgz' coadd=tile.coadd bands=3 %}">w3.tgz</a></td>
+    <td><a href="{% url 'tile-tgz' coadd=tile.coadd bands=4 %}">w4.tgz</a></td>
+    <td><a href="{% url 'tile-tgz' coadd=tile.coadd %}">w1234.tgz</a></td>
+    <td><a href="http://irsa.ipac.caltech.edu/ibe/data/wise/merge/merge_p3am_cdd/{{tile.coadd|slice:":2"}}/{{tile.coadd|slice:":4"}}/{{tile.coadd}}_ac51/">AllWISE</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<div id="optbox">
+Bands to include:
+&nbsp;
+<a onclick="javascript:checkAll('bandbox',true);" href="javascript:void(0);">all</a>
+<a onclick="javascript:checkAll('bandbox',false);" href="javascript:void(0);">none</a>
+<br/>
+<div id="bandbox">
+<input type="checkbox" name="w1" checked> W1&nbsp;<br/>
+<input type="checkbox" name="w2" checked> W2&nbsp;<br/>
+<input type="checkbox" name="w3" checked> W3&nbsp;<br/>
+<input type="checkbox" name="w4" checked> W4<br/>
+</div>
+<br />
+Files to include:
+&nbsp;
+<a onclick="javascript:checkAll('prodbox',true);" href="javascript:void(0);">all</a>
+<a onclick="javascript:checkAll('prodbox',false);" href="javascript:void(0);">none</a>
+<br/>
+<div id="prodbox">
+<input type="checkbox" name="frames" checked> frames (table of input frames) <br/>
+<input type="checkbox" name="masks" checked> masks (input-frame masks) <br/>
+<input type="checkbox" name="imgu" checked> img-u (image, unmasked) <br/>
+<input type="checkbox" name="stdu" checked> std-u (per-pixel standard deviation in the stack, unmasked) <br/>
+<input type="checkbox" name="invvaru" checked> invvar-u (inverse-variance, unmasked) <br/>
+<input type="checkbox" name="nu" checked> n-u (number of input frames, unmasked) <br/>
+<input type="checkbox" name="imgm" checked> img-m (image, masked) <br/>
+<input type="checkbox" name="stdm" checked> std-m (per-pixel standard deviation in the stack, masked) <br/>
+<input type="checkbox" name="invvarm" checked> invvar-m (inverse-variance, masked) <br/>
+<input type="checkbox" name="nm" checked> n-m (number of input frames, masked) <br/>
+</div>
+</div>
+ <br/>
+<input type="submit" value="Download selected files" class="bigbutton">
+</p>
+</form>
+
+<br/>
+<hr/>
+<br/>
+
+<p class="light">Table design: <a href="http://coding.smashingmagazine.com/2008/08/13/top-10-css-table-designs/">R. Christie</a></small>
+</center>
+{% endblock %}
+

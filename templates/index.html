@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+unWISE: unblurred coadds from WISE
+{% endblock %}
+
+{% block content %}
+<center>
+<h2>unWISE: unofficial, unblurred coadds of the WISE imaging</h2>
+<h3>and</h3>
+<h2>Forced photometry of SDSS sources in the WISE imaging</h2>
+
+<table border="0">
+<th>WISE All-Sky Release Atlas Image</th><th>unWISE coadd</th>
+<tr>
+<td><img src="{% static "npole2-00.png" %}" /></td><td><img src="{% static "npole2-01.png" %}" /></td>
+</tr>
+<tr><td colspan="2" align="center">(W1,W2 composite, tile 2709p666, ~6 arcmin square)</td></tr>
+</table>
+
+<br/>
+
+<p class="big"><a href="/imgsearch/">Search &amp; Download Coadd Images</a></p>
+
+<p class="big"><a href="/photsearch/">Search &amp; Download SDSS/WISE Forced Photometry</a></p>
+
+<br/>
+
+<p>
+unWISE coadds: <a href="http://arxiv.org/abs/1405.0308">paper (arxiv 1405.0308)</a> or <a href="http://iopscience.iop.org/1538-3881/147/5/108/">(AJ)</a>
+<a href="{% static 'unwise.pdf' %}">(PDF)</a>
+<a href="{% static 'unwise-bw.pdf' %}">(B&amp;W PDF)</a>
+&nbsp;|&nbsp;
+<a href="http://trac.astrometry.net/browser/trunk/projects/unwise/unwise-coadd.py">code</a><br/><br/>
+SDSS/WISE Forced photometry: <a href="http://broiler.astrometry.net/~dstn/temp/sdsswise.pdf">paper (draft)</a>
+&nbsp;|&nbsp;
+<a href="http://trac.astrometry.net/browser/trunk/projects/wise-sdss-phot/forcedphot.py">code</a><br/><br/>
+Contact: <a href="http://dstn.astrometry.net">Dustin Lang</a>, dstn at cmu dot edu<br/>
+Or post questions on the <a href="https://groups.google.com/forum/#!forum/unwise">forum</a></p>
+
+<br/>
+
+<p>
+<img src="{% static "orion.jpg" %}" />
+<br/>
+Orion nebula, W1,W2 composite
+</p>
+<p>
+<img src="{% static "orion34.jpg" %}" />
+<br/>
+Orion nebula, W3,W4 composite; background-matched, no median-filter
+</p>
+
+<p>
+<img src="{% static "m31-02.jpg" %}" />
+<br/>
+Andromeda, W3/W4, background-matched, no median-filter
+</p>
+{% endblock %}

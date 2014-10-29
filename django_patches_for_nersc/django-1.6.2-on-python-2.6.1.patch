@@ -1,0 +1,94 @@
+diff -ru lib/python2.6/site-packages/django/core/urlresolvers.py ../venv-try1/unwise/lib/python2.6/site-packages/django/core/urlresolvers.py
+--- lib/python2.6/site-packages/django/core/urlresolvers.py	2014-03-26 05:56:53.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/core/urlresolvers.py	2014-03-11 09:47:47.955040000 -0700
+@@ -506,6 +506,7 @@
+         if ns_pattern:
+             resolver = get_ns_resolver(ns_pattern, resolver)
+ 
++    kwargs = dict([(str(k),v) for k,v in kwargs.items()])
+     return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+ 
+ reverse_lazy = lazy(reverse, str)
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/core: urlresolvers.py~
+diff -ru lib/python2.6/site-packages/django/db/models/base.py ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models/base.py
+--- lib/python2.6/site-packages/django/db/models/base.py	2014-03-26 05:56:53.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models/base.py	2014-03-11 09:50:19.591588000 -0700
+@@ -93,6 +93,10 @@
+         else:
+             kwargs = {}
+ 
++        newkwargs = dict([(str(k),v) for k,v in kwargs.items()])
++        kwargs = newkwargs
++        
++        opt = Options(meta, **kwargs)
+         new_class.add_to_class('_meta', Options(meta, **kwargs))
+         if not abstract:
+             new_class.add_to_class('DoesNotExist', subclass_exception(str('DoesNotExist'),
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models: base.py~
+diff -ru lib/python2.6/site-packages/django/db/models/fields/__init__.py ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models/fields/__init__.py
+--- lib/python2.6/site-packages/django/db/models/fields/__init__.py	2014-03-26 05:56:53.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models/fields/__init__.py	2014-03-11 09:28:26.323033000 -0700
+@@ -581,6 +581,9 @@
+         assert kwargs.get('primary_key', False) is True, \
+                "%ss must have primary_key=True." % self.__class__.__name__
+         kwargs['blank'] = True
++
++        kwargs = dict([(str(k),v) for k,v in kwargs.items()])
++        
+         Field.__init__(self, *args, **kwargs)
+ 
+     def get_internal_type(self):
+@@ -631,6 +634,7 @@
+ 
+     def __init__(self, *args, **kwargs):
+         kwargs['blank'] = True
++        kwargs = dict([(str(k),v) for k,v in kwargs.items()])
+         Field.__init__(self, *args, **kwargs)
+ 
+     def get_internal_type(self):
+@@ -992,6 +996,7 @@
+         # compliant with RFCs 3696 and 5321
+ 
+         kwargs['max_length'] = kwargs.get('max_length', 75)
++        kwargs = dict([(str(k),v) for k,v in kwargs.items()])
+         CharField.__init__(self, *args, **kwargs)
+ 
+     def formfield(self, **kwargs):
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/db/models/fields: __init__.py~
+diff -ru lib/python2.6/site-packages/django/forms/fields.py ../venv-try1/unwise/lib/python2.6/site-packages/django/forms/fields.py
+--- lib/python2.6/site-packages/django/forms/fields.py	2014-03-26 05:56:53.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/forms/fields.py	2014-03-11 09:40:04.673811000 -0700
+@@ -223,6 +223,7 @@
+     def __init__(self, max_value=None, min_value=None, *args, **kwargs):
+         self.max_value, self.min_value = max_value, min_value
+         kwargs.setdefault('widget', NumberInput if not kwargs.get('localize') else self.widget)
++        kwargs = dict([(str(k),v) for k,v in kwargs.items()])
+         super(IntegerField, self).__init__(*args, **kwargs)
+ 
+         if max_value is not None:
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/forms: fields.py~
+diff -ru lib/python2.6/site-packages/django/views/generic/base.py ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic/base.py
+--- lib/python2.6/site-packages/django/views/generic/base.py	2014-03-26 05:56:54.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic/base.py	2014-03-11 09:47:11.468012000 -0700
+@@ -125,6 +125,8 @@
+         passed to the constructor of the response class.
+         """
+         response_kwargs.setdefault('content_type', self.content_type)
++        response_kwargs = dict([(str(k),v) for k,v in response_kwargs.items()])
++
+         return self.response_class(
+             request = self.request,
+             template = self.get_template_names(),
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic: base.py~
+diff -ru lib/python2.6/site-packages/django/views/generic/list.py ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic/list.py
+--- lib/python2.6/site-packages/django/views/generic/list.py	2014-03-26 05:56:54.000000000 -0700
++++ ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic/list.py	2014-03-11 09:43:43.398653000 -0700
+@@ -126,6 +126,7 @@
+         if context_object_name is not None:
+             context[context_object_name] = queryset
+         context.update(kwargs)
++        context = dict([(str(k),v) for k,v in context.items()])
+         return super(MultipleObjectMixin, self).get_context_data(**context)
+ 
+ 
+Only in ../venv-try1/unwise/lib/python2.6/site-packages/django/views/generic: list.py~

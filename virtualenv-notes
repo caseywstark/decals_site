@@ -1,0 +1,75 @@
+Setting up virtualenv for NERSC science gateway:
+
+ssh portal-auth.nersc.gov
+
+module list
+module unload python/2.7.1
+module unload swig/1.3.40
+module unload gcc/47
+gcc --version
+echo $LD_LIBRARY_PATH
+echo $PYTHONPATH
+unset PYTHONPATH
+module load python
+python --version
+
+cd /project/projectdirs/cosmo/dstn/unwise
+
+virtualenv --system-site-packages venv-unwise-phot
+cd venv-unwise-phot
+
+source bin/activate
+
+> which python
+/project/projectdirs/cosmo/dstn/unwise/venv-unwise/bin/python
+
+> python --version
+Python 2.6.1
+
+> python -c "import numpy; print numpy.__version__; print numpy.__file__"
+1.7.1
+/usr/common/usg/python/2.6.1/lib/python2.6/site-packages/numpy/__init__.py
+
+> python -c "import django; print django.get_version(); print django.__file__"
+1.3
+/usr/common/usg/python/2.6.1/lib/python2.6/site-packages/Django-1.3-py2.6.egg/django/__init__.pyc
+
+> python -c "import pyfits; print pyfits.__version__; print pyfits.__file__"
+1.3
+/usr/common/usg/python/2.6.1/lib/python2.6/site-packages/pyfits/__init__.pyc
+
+Django 1.6 requires Python >= 2.6.5, vs the 2.6.1 installed.
+https://docs.djangoproject.com/en/1.6/releases/1.6/
+but we have patches.
+
+pip install Django==1.6.2
+pip install fitsio
+
+> python -c "import django; print django.get_version(); print django.__file__"
+1.6.2
+/project/projectdirs/cosmo/dstn/unwise/venv-unwise/lib/python2.6/site-packages/django/__init__.pyc
+
+git clone git@github.com:dstndstn/astrometry.net astrometry
+(cd astrometry && make -k)
+(cd astrometry && make -k py)
+(cd astrometry/libkd && make pyspherematch)
+
+git clone git@github.com:dstndstn/tractor.git tractor-git
+(cd tractor-git && make)
+ln -s tractor-git/tractor tractor
+
+svn co svn+ssh://astrometry.net/svn/trunk/projects/unwise-web
+
+# Django patches:
+patch -p3 < unwise-web/django-1.6.2-on-python-2.6.1.patch
+(cd lib/python2.6/site-packages/; patch -p3) < unwise-web/django-1.6.2-on-python-2.6.1-b.patch
+
+python manage.py syncdb --database=usage
+
+# copy django.sqlite3 or run:
+#   python manage.py syncdb
+#   python load.py
+#   python load2.py
+
+# copy window_flist_cut.kd
+

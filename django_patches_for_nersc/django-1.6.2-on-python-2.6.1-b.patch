@@ -1,0 +1,37 @@
+diff -ur django-orig/core/management/__init__.py lib/python2.6/site-packages/django/core/management/__init__.py
+--- django-orig/core/management/__init__.py	2014-10-17 11:51:04.000000000 -0700
++++ lib/python2.6/site-packages/django/core/management/__init__.py	2014-10-17 12:05:25.919217000 -0700
+@@ -156,7 +156,7 @@
+             defaults[opt.dest] = opt.default
+     defaults.update(options)
+ 
+-    return klass.execute(*args, **defaults)
++    return klass.execute(*args, **dict([(str(k),v) for k,v in defaults.items()]))
+ 
+ class LaxOptionParser(OptionParser):
+     """
+Binary files django-orig/core/management/__init__.pyc and lib/python2.6/site-packages/django/core/management/__init__.pyc differ
+diff -ur django-orig/db/models/fields/__init__.py lib/python2.6/site-packages/django/db/models/fields/__init__.py
+--- django-orig/db/models/fields/__init__.py	2014-10-17 11:54:30.076200000 -0700
++++ lib/python2.6/site-packages/django/db/models/fields/__init__.py	2014-10-17 11:56:49.573354000 -0700
+@@ -738,7 +738,7 @@
+         if auto_now or auto_now_add:
+             kwargs['editable'] = False
+             kwargs['blank'] = True
+-        Field.__init__(self, verbose_name, name, **kwargs)
++        Field.__init__(self, verbose_name, name, **dict([(str(k),v) for k,v in kwargs.items()]))
+ 
+     def get_internal_type(self):
+         return "DateField"
+@@ -1123,7 +1123,7 @@
+ 
+     def __init__(self, *args, **kwargs):
+         kwargs['max_length'] = 15
+-        Field.__init__(self, *args, **kwargs)
++        Field.__init__(self, *args, **dict([(str(k),v) for k,v in kwargs.items()]))
+ 
+     def get_internal_type(self):
+         return "IPAddressField"
+Binary files django-orig/db/models/fields/__init__.pyc and lib/python2.6/site-packages/django/db/models/fields/__init__.pyc differ
+Binary files django-orig/views/generic/base.pyc and lib/python2.6/site-packages/django/views/generic/base.pyc differ
+Binary files django-orig/views/generic/list.pyc and lib/python2.6/site-packages/django/views/generic/list.pyc differ
