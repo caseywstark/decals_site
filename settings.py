@@ -9,8 +9,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 """
 
-FORCE_SCRIPT_NAME = '/unwise'
-
 import os
 PROJECT_PATH = os.path.normpath(os.path.dirname(__file__))
 
@@ -50,7 +48,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_ROOT = ''
-STATIC_URL = '/unwise/static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ('static',)
 
