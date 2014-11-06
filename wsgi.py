@@ -37,7 +37,7 @@ sys.path[:0] = new_sys_path
 for i in [root_path, app_path]:
     sys.path.append(i)
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "unwise.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "settings"
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
