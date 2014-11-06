@@ -16,25 +16,39 @@
     {% endblock %}
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div id="#wrap">
+
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'index' %}">DECaLS</a>
+          </div>
+          <div class="navbar-links">
+            <ul class="nav navbar-nav">
+              <li><a href="{% url 'data' %}">data access</a></li>
+              <li><a href="{% url 'contact' %}">contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{% url 'index' %}">DECaLS</a>
+        <div class="col-sm-12">
+          <img src="{% static 'images/brick-385847-02.jpg' %}">
         </div>
-        <div class="navbar-links">
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'data' %}">data access</a></li>
-            <li><a href="{% url 'contact' %}">contact</a></li>
-          </ul>
+        <div class="col-sm-12">
+          {% block body %}{% endblock %}
         </div>
       </div>
+
+      <div id="push"></div>
     </div>
-    <div class="container">
-      <div class="col-sm-12">
-        <img src="{% static 'images/brick-385847-02.jpg' %}">
-      </div>
-      <div class="col-sm-12">
-        {% block body %}{% endblock %}
+
+    <div id="footer">
+      <div class="container">
+        Copyright &copy; 2014, The DECam Legacy Survey.
+        <img src="{% static 'images/noao_logo.jpg' %}">
+        <img src="{% static 'images/lbl_logo.jpg' %}">
       </div>
     </div>
   </body>
