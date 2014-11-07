@@ -16,34 +16,29 @@
     {% endblock %}
   </head>
   <body>
-    <div id="#wrap">
-
-      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'index' %}">DECaLS</a>
-          </div>
-          <div class="navbar-links">
-            <ul class="nav navbar-nav">
-              <li><a href="{% url 'data' %}">data access</a></li>
-              <li><a href="{% url 'contact' %}">contact</a></li>
-            </ul>
+    <div id="wrap">
+      <div id="header">
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="{% url 'index' %}">DECam Legacy Survey</a>
+            </div>
+            <div class="navbar-links">
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'data' %}">data access</a></li>
+                <li><a href="{% url 'contact' %}">contact</a></li>
+              </ul>
+            </div>
           </div>
         </div>
+        <div id="banner" style="background-image: url({% static 'images/brick-392947-00.jpg' %})">
+        </div>
       </div>
-
       <div class="container">
-        <div class="col-sm-12">
-          <img src="{% static 'images/brick-385847-02.jpg' %}">
-        </div>
-        <div class="col-sm-12">
-          {% block body %}{% endblock %}
-        </div>
+        {% block body %}{% endblock %}
       </div>
-
       <div id="push"></div>
     </div>
-
     <div id="footer">
       <div class="container">
         Copyright &copy; 2014, The DECam Legacy Survey.
