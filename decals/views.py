@@ -4,8 +4,8 @@ def index(request):
     context = {"page": {"title": "Home"}}
     return render(request, 'index.html', context)
 
-def data(request):
-    context = {"page": {"title": "Data"}}
+def data_access(request):
+    context = {"page": {"title": "Data Access"}}
     return render(request, 'data.html', context)
 
 def science(request):
