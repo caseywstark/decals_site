@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 
-{% block body %}
-<h1>The Dark Energy Camera Legacy Survey</h1>
+{% load staticfiles %}
 
-<p>Just copy the project goals for now?</p>
+{% block body %}
+<div class="row">
+  <div class="col-sm-12">
+    <h1>The Dark Energy Camera Legacy Survey</h1>
+    <p>
+    The Dark Energy Camera Legacy Survey is an ongoing public <a href="http://noao.edu/">NOAO</a> Survey Program to provide deeper, second-epoch imaging of the <a href="http://sdss.org/">SDSS</a> footprint in three optical bands. Using the <a href="http://www.ctio.noao.edu/noao/content/dark-energy-camera-decam">Dark Energy Camera</a> (DECam) at the prime focus of the 4m <a href="http://www.ctio.noao.edu/noao/content/Victor-Blanco-4-m-Telescope">Blanco telescope</a>, we will image 6700 deg<sup>2</sup> of the SDSS/BOSS extragalactic footprint that lies in the region -20 < Dec < +30 deg to depths of g = 24.7, r = 23.9, and z = 23.0 AB mag (5-sigma point-source). The goal is to create a high quality multicolor imaging dataset that will be significantly deeper and have better image quality than SDSS or <a href="http://pan-starrs.ifa.hawaii.edu/public/">Pan-STARRS</a>. Our survey will enable transformational studies of the dark and baryonic matter distribution in galaxy halos, focusing on the key issues of feedback and halo growth in the evolution of galaxies and AGN. The data will also be useful for studies of the halo and satellites of the Milky Way. In addition to providing a legacy dataset that will greatly enhance the value of the existing SDSS spectroscopy, our proposed survey will enable target selection within this footprint for the future <a href="http://desi.lbl.gov/">Dark Energy Spectroscopic Instrument</a> (DESI) survey, which aims to provide spectra of additional tens of millions of galaxies and QSOs.
+    </p>
+    <p>
+    For more information, please see the project's
+    <a href="https://desi.lbl.gov/trac/wiki/PublicPages/DecamLegacy">public
+    wiki pages</a>.
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Current coverage</h3>
+    <figure>
+      <p>The footprint and current coverage of the DECaLS survey. The black points show the center positions of the individual tiles and the red, green and blue open circles represent the 1st, 2nd and 3rd pass observations in each band.</p>
+      <img class="img-responsive" src="{% static 'images/decals_coverage.jpg' %}" alt="survey footprint and coverage">
+    </figure>
+    </p>
+  </div>
+  <div class="col-sm-6">
+    <h3>Acknowledgments</h3>
+    <p>
+    The LBNL Physics Division is by the <a href="http://science.energy.gov/hep/">U.S. Department of Energy Office of Science High Energy Physics</a>.
+    <p>
+    The Cerro Tololo Inter-American Observatory and the National Optical Astronomy Observatory are operated by the Association of Universities for Research in Astronomy (AURA) under cooperative agreement with the National Science Foundation.
+    </p>
+    <p>
+    The National Energy Research Scientific Computing Center, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC02-05CH11231, provided staff, computational resources, and data storage for this project.
+    </p>
+    <p>
+    This project used data obtained with the Dark Energy Camera (DECam), which was constructed by the Dark Energy Survey (DES) collaborating institutions: Argonne National Lab, University of California Santa Cruz, University of Cambridge, Centro de Investigaciones Energeticas, Medioambientales y Tecnologicas-Madrid, University of Chicago, University College London, DES-Brazil consortium, University of Edinburgh, ETH-Zurich, University of Illinois at Urbana-Champaign, Institut de Ciencies de l'Espai, Institut de Fisica d'Altes Energies, Lawrence Berkeley National Lab, Ludwig-Maximilians Universitat, University of Michigan, National Optical Astronomy Observatory, University of Nottingham, Ohio State University, University of Pennsylvania, University of Portsmouth, SLAC National Lab, Stanford University, University of Sussex, and Texas A&M University. Funding for DES, including DECam, has been provided by the U.S. Department of Energy, National Science Foundation, Ministry of Education and Science (Spain), Science and Technology Facilities Council (UK), Higher Education Funding Council (England), National Center for Supercomputing Applications, Kavli Institute for Cosmological Physics, Financiadora de Estudos e Projetos, Fundação Carlos Chagas Filho de Amparo a Pesquisa, Conselho Nacional de Desenvolvimento Científico e Tecnológico and the Ministério da Ciência e Tecnologia (Brazil), the German Research Foundation-sponsored cluster of excellence "Origin and Structure of the Universe" and the DES collaborating institutions.
+    </p>
+  </div>
+</div>
 {% endblock %}
