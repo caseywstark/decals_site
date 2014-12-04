@@ -20,7 +20,7 @@ html, body {
 /* navbar style */
 .navbar {
   background-color: #000000;
-  border-color: #333333;
+  border-bottom: 1px solid #999999;
 }
 .navbar, .navbar-brand, .navbar-nav > li > a {
   color: #ffffff;
