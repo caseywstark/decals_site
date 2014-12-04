@@ -1,5 +1,10 @@
-
 .svn
-
 *.pyc
+
+# database files
+*.db
+*.sqlite3
+
+# settings we can't make public
+local_settings.py
 
