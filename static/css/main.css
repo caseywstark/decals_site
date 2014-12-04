@@ -17,6 +17,34 @@ html, body {
   background-repeat: repeat;
 }
 
+/* navbar style */
+.navbar {
+  background-color: #000000;
+  border-color: #333333;
+}
+.navbar, .navbar-brand, .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-brand:hover, .navbar-brand:focus,
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+  background-color: #333333;
+  color: #cccccc;
+}
+
+.navbar-brand {
+  margin-right: 40px;
+}
+.navbar-nav li {
+  position: relative;
+  top: 10px;
+  height: 30px;
+  border-left: 1px dotted #999999;
+}
+.navbar-nav a {
+  position: relative;
+  top: -10px;
+}
+
 /* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
