@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sessions',
     'decals',
+    'maps'
 )
 
 MIDDLEWARE_CLASSES = (
